@@ -1,9 +1,10 @@
 package com.assignment.poker.parser
 
-import com.assignment.poker.domain.{Game, Hand}
+import com.assignment.poker.domain.{Game, GameDetails, Hand}
+
 import scala.language.implicitConversions
 
-trait Parser[I] {
+sealed trait Parser[I] {
   def parse(input: I): GameDetails
 }
 
@@ -11,15 +12,12 @@ class StringParser extends Parser[String] {
 
   implicit def toGame(s: String): Game = Game.apply(s)
   implicit def toHand(s: String): Hand = Hand(s)
-  implicit def toHandList(arr: Array[String]): List[Hand] = arr.map(s => Hand(s)).toList
+  implicit def toHandList(arr: List[String]): List[Hand] = arr.map(s => Hand(s))
 
   override def parse(input: String): GameDetails = {
     input.split(" ") match {
-      case data @ Array(game, handValue, _*) => GameDetails(game, handValue, data.drop(2))
+      case data @ Array(game, handValue, _*) => GameDetails(game, handValue, data.drop(2).toList)
     }
   }
 }
-
-case class GameDetails(game: Game, handValue: Hand, hands: List[Hand])
-
 

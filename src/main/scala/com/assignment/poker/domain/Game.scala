@@ -8,4 +8,4 @@ object Game {
   object FiveCardDraw extends Game("five-card-draw")
 }
 
-final case class Hand(cards: String)
+final case class GameDetails(game: Game, board: Hand, hands: List[Hand])
