@@ -18,6 +18,7 @@ class StringParser extends Parser[String] {
       case "texas-holdem" :: board :: hands => GameDetails(Game.TexasHoldem, board, hands)
       case "omaha-holdem" :: board :: hands => GameDetails(Game.OmahaHoldem, board, hands)
       case "five-card-draw" :: hands        => GameDetails(Game.FiveCardDraw, Hand(List.empty), hands)
+      case _                                => throw new RuntimeException("parse error ...")
     }
   }
 }
