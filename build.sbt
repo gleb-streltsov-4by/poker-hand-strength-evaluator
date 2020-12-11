@@ -1,3 +1,5 @@
+import sbt.util
+
 name := "poker-hand-strength-evaluator"
 
 version := "0.1"
@@ -10,5 +12,7 @@ libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.2"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.2" % "test"
 
 logBuffered in Test := false
+
+logLevel := util.Level.Error
 
 mainClass in (Compile, run) := Some("com.assignment.poker.ConsolePokerEvaluatorRunner")

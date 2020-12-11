@@ -1,23 +1,23 @@
 package com.assignment.poker
 
-import com.assignment.poker.core.impl.{
-  FiveCardDrawEvaluator,
-  OmahaHoldemEvaluator,
-  TexasHoldemEvaluator
-}
+import com.assignment.poker.core.impl.{FiveCardDrawEvaluator, OmahaHoldemEvaluator, TexasHoldemEvaluator}
 import com.assignment.poker.domain.Game
 import com.assignment.poker.parser.StringParser
 import com.assignment.poker.util.ConsoleUtil.evaluationsToString
+
+import scala.io.StdIn
 
 object ConsolePokerEvaluatorRunner {
 
   private val parser = new StringParser()
 
-  def main(args: Array[String]): Unit = {
-    println(evaluate(args.mkString(" ")))
-  }
+  def main(args: Array[String]): Unit = Iterator.continually(Option(StdIn.readLine()))
+    .takeWhile(_.nonEmpty)
+    .foreach { input =>
+      input map process foreach println
+    }
 
-  def evaluate(input: String): String = {
+  def process(input: String): String = {
     try {
       val gameDetails = parser.parse(input)
 
