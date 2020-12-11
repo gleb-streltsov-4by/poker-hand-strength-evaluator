@@ -10,13 +10,14 @@ sealed trait Parser[I] {
 
 class StringParser extends Parser[String] {
 
-  implicit def toGame(s: String): Game = Game.apply(s)
   implicit def toHand(s: String): Hand = Hand(s)
   implicit def toHandList(arr: List[String]): List[Hand] = arr.map(s => Hand(s))
 
   override def parse(input: String): GameDetails = {
-    input.split(" ") match {
-      case data @ Array(game, handValue, _*) => GameDetails(game, handValue, data.drop(2).toList)
+    input.split(" ").toList match {
+      case "texas-holdem" :: board :: hands => GameDetails(Game.TexasHoldem, board, hands)
+      case "omaha-holdem" :: board :: hands => GameDetails(Game.OmahaHoldem, board, hands)
+      case "five-card-draw" :: hands        => GameDetails(Game.FiveCardDraw, Hand(List.empty), hands)
     }
   }
 }

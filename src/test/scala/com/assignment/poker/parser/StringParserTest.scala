@@ -67,8 +67,9 @@ class StringParserTest extends AnyFlatSpec{
 
     val expected = GameDetails(
       Game.FiveCardDraw,
-      Hand("7h4s4h8c9h"),
+      Hand(List()),
       List(
+        Hand("7h4s4h8c9h"),
         Hand("Tc5h6dAc5c"),
         Hand("Kd9sAs3cQs"),
         Hand("Ah9d6s2cKh"),

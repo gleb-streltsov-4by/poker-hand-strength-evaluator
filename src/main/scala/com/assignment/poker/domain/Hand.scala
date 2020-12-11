@@ -33,16 +33,16 @@ object Hand {
   }
 }
 
-sealed case class HandType(order: Int)
+sealed case class HandType(order: Int, name: String)
 
 object HandType {
-  object StraightFlush  extends HandType(0)
-  object FourOfKind     extends HandType(1)
-  object FullHouse      extends HandType(2)
-  object Flush          extends HandType(3)
-  object Straight       extends HandType(4)
-  object ThreeOfKind    extends HandType(5)
-  object TwoPairs       extends HandType(6)
-  object Pair           extends HandType(7)
-  object HighCard       extends HandType(8)
+  object StraightFlush  extends HandType(0, "StraightFlush")
+  object FourOfKind     extends HandType(1, "FourOfKind")
+  object FullHouse      extends HandType(2, "FullHouse")
+  object Flush          extends HandType(3, "Flush")
+  object Straight       extends HandType(4, "Straight")
+  object ThreeOfKind    extends HandType(5, "ThreeOfKind")
+  object TwoPairs       extends HandType(6, "TwoPairs")
+  object Pair           extends HandType(7, "Pair")
+  object HighCard       extends HandType(8, "HighCard")
 }

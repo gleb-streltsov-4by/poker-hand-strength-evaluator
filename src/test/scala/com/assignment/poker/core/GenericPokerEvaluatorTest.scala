@@ -2,14 +2,14 @@ package com.assignment.poker.core
 
 import cats.implicits.catsSyntaxOptionId
 import com.assignment.poker.core.impl.TexasHoldemEvaluator
-import com.assignment.poker.domain.{Card, EvaluationDetail, Hand, HandType}
+import com.assignment.poker.domain.{Card, EvaluationDetail, EvaluationResult, Hand, HandType}
 import org.scalatest.flatspec.AnyFlatSpec
 
-class TypedPokerEvaluatorTest extends AnyFlatSpec {
+class GenericPokerEvaluatorTest extends AnyFlatSpec {
 
   private[this] val sut = new TexasHoldemEvaluator()
 
-  "TypedPokerEvaluator" should "correctly identity StraightFlush " in {
+  "TypedPokerEvaluator" should "correctly evaluate StraightFlush " in {
     val origin = Hand(List(Card("Jh"), Card("Th")))
 
     val combos = List(
@@ -29,7 +29,7 @@ class TypedPokerEvaluatorTest extends AnyFlatSpec {
     assert(actualEvaluation == expectedEvaluation)
   }
 
-  "TypedPokerEvaluator" should "correctly identity FourOfKind " in {
+  "TypedPokerEvaluator" should "correctly evaluate FourOfKind " in {
     val origin = Hand(List(Card("Ah"), Card("Kh")))
 
     val combos = List(
@@ -49,7 +49,7 @@ class TypedPokerEvaluatorTest extends AnyFlatSpec {
     assert(actualEvaluation == expectedEvaluation)
   }
 
-  "TypedPokerEvaluator" should "correctly identity FullHouse " in {
+  "TypedPokerEvaluator" should "correctly evaluate FullHouse " in {
     val origin = Hand(List(Card("Ah"), Card("Th")))
 
     val combos = List(
@@ -69,7 +69,22 @@ class TypedPokerEvaluatorTest extends AnyFlatSpec {
     assert(actualEvaluation == expectedEvaluation)
   }
 
-  "TypedPokerEvaluator" should "correctly identity Flush " in {
+  // Need to clarify requirements
+
+//  "TypedPokerEvaluator" should "not evaluate FullHouse with board cards" in {
+//    val origin = Hand(List(Card("Ah"), Card("Ac")))
+//
+//    val combos = List(
+//      Hand(List(Card("Ah"), Card("Ac"), Card("Ad"), Card("Th"), Card("Tc")))
+//    )
+//
+//    val expectedEvaluation = EvaluationResult(success = false, None)
+//    val actualEvaluation = sut.tryFullHouse(origin, combos)
+//
+//    assert(actualEvaluation == expectedEvaluation)
+//  }
+
+  "TypedPokerEvaluator" should "correctly evaluate Flush " in {
     val origin = Hand(List(Card("Ah"), Card("Th")))
 
     val combos = List(
@@ -89,7 +104,7 @@ class TypedPokerEvaluatorTest extends AnyFlatSpec {
     assert(actualEvaluation == expectedEvaluation)
   }
 
-  "TypedPokerEvaluator" should "correctly identity `Straight`" in {
+  "TypedPokerEvaluator" should "correctly evaluate `Straight`" in {
     val origin = Hand(List(Card("2c"), Card("4h")))
 
     val combos = List(
@@ -110,7 +125,7 @@ class TypedPokerEvaluatorTest extends AnyFlatSpec {
     assert(actualEvaluation == expectedEvaluation)
   }
 
-  "TypedPokerEvaluator" should "correctly identity `ThreeOfKind`" in {
+  "TypedPokerEvaluator" should "correctly evaluate `ThreeOfKind`" in {
     val origin = Hand(List(Card("2c"), Card("4h")))
 
     val combos = List(
@@ -130,7 +145,20 @@ class TypedPokerEvaluatorTest extends AnyFlatSpec {
     assert(actualEvaluation == expectedEvaluation)
   }
 
-  "TypedPokerEvaluator" should "correctly identity `TwoPairs`" in {
+  "TypedPokerEvaluator" should "not evaluate `ThreeOfKind` with board cards" in {
+    val origin = Hand(List(Card("2c"), Card("4h")))
+
+    val combos = List(
+      Hand(List(Card("2c"), Card("4h"), Card("Ac"), Card("Ah"), Card("Ad")))
+    )
+
+    val expectedEvaluation = EvaluationResult(success = false, None)
+    val actualEvaluation = sut.tryThreeOfKind(origin, combos)
+
+    assert(actualEvaluation == expectedEvaluation)
+  }
+
+  "TypedPokerEvaluator" should "correctly evaluate `TwoPairs`" in {
     val origin = Hand(List(Card("2c"), Card("4h")))
 
     val combos = List(
@@ -150,7 +178,20 @@ class TypedPokerEvaluatorTest extends AnyFlatSpec {
     assert(actualEvaluation == expectedEvaluation)
   }
 
-  "TypedPokerEvaluator" should "correctly identity `Pair`" in {
+  "TypedPokerEvaluator" should "not evaluate `TwoPairs` with board cards" in {
+    val origin = Hand(List(Card("2c"), Card("4h")))
+
+    val combos = List(
+      Hand(List(Card("4h"), Card("4c"), Card("Th"), Card("2c"), Card("Tc")))
+    )
+
+    val expectedEvaluation = EvaluationResult(success = false, None)
+    val actualEvaluation = sut.tryTwoPairs(origin, combos)
+
+    assert(actualEvaluation == expectedEvaluation)
+  }
+
+  "TypedPokerEvaluator" should "correctly evaluate `Pair`" in {
     val origin = Hand(List(Card("2c"), Card("4h")))
 
     val combos = List(
@@ -166,6 +207,38 @@ class TypedPokerEvaluatorTest extends AnyFlatSpec {
       origin).some)
 
     val actualEvaluation = sut.tryPair(origin, combos)
+
+    assert(actualEvaluation == expectedEvaluation)
+  }
+
+  "TypedPokerEvaluator" should "not evaluate `Pair` with board cards" in {
+    val origin = Hand(List(Card("2c"), Card("4h")))
+
+    val combos = List(
+      Hand(List(Card("2c"), Card("4h"), Card("Ah"), Card("Ac"), Card("Tc")))
+    )
+
+    val expectedEvaluation = EvaluationResult(success = false, None)
+    val actualEvaluation = sut.tryPair(origin, combos)
+
+    assert(actualEvaluation == expectedEvaluation)
+  }
+
+  "TypedPokerEvaluator" should "correctly evaluate `HighCard`" in {
+    val origin = Hand(List(Card("6c"), Card("7h")))
+
+    val combos = List(
+      Hand(List(Card("6c"), Card("7h"), Card("4h"), Card("Qd"), Card("Jc"))),
+      Hand(List(Card("6c"), Card("7h"), Card("5h"), Card("Qd"), Card("Jc"))),
+      Hand(List(Card("Qd"), Card("6c"), Card("7h"), Card("5h"), Card("Jc")))
+    )
+
+    val expectedEvaluation = EvaluationResult(success = true, EvaluationDetail(
+      HandType.HighCard,
+      Hand(List(Card("7h"), Card("6c"))),
+      origin).some)
+
+    val actualEvaluation = sut.tryHighCard(origin, combos)
 
     assert(actualEvaluation == expectedEvaluation)
   }

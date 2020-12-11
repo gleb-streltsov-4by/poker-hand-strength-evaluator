@@ -1,5 +1,7 @@
 package com.assignment.poker.domain
 
+final case class EvaluationResult(success: Boolean, detail: Option[EvaluationDetail])
+
 final case class EvaluationDetail(handType: HandType, sorted: Hand, origin: Hand) {
 
   /**

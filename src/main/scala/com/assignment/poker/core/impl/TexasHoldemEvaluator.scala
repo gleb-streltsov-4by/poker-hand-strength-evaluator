@@ -1,9 +1,9 @@
 package com.assignment.poker.core.impl
 
-import com.assignment.poker.core.TypedPokerEvaluator
+import com.assignment.poker.core.GenericPokerEvaluator
 import com.assignment.poker.domain.Hand
 
-class TexasHoldemEvaluator extends TypedPokerEvaluator {
+class TexasHoldemEvaluator extends GenericPokerEvaluator {
 
   override def combinations(board: Hand, hand: Hand): List[Hand] = {
     val handCards = hand.cards
