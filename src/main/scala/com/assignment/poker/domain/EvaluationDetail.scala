@@ -1,6 +1,6 @@
 package com.assignment.poker.domain
 
-final case class EvaluationDetail(handType: HandType, sortedHand: Hand, hand: Hand) {
+final case class EvaluationDetail(handType: HandType, sorted: Hand, origin: Hand) {
 
   /**
    * Compares evaluation details
@@ -13,8 +13,8 @@ final case class EvaluationDetail(handType: HandType, sortedHand: Hand, hand: Ha
     else if (this.handType.order > other.handType.order) -1
 
     else {
-      val thisCards = this.sortedHand.cards
-      val otherCards = other.sortedHand.cards
+      val thisCards = this.sorted.cards
+      val otherCards = other.sorted.cards
 
       thisCards.zip(otherCards).foldLeft(0)((acc, pair) => {
         val thisCardValue = pair._1.value

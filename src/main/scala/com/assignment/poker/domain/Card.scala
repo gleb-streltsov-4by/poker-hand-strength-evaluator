@@ -23,13 +23,16 @@ object Card {
   val faces: List[String] = (2 to 9).map(_.toString).toList ::: List("T", "J", "Q", "K", "A")
   val suits: List[String] = List("h", "d", "c", "s")
 
-  def value(key: String): Int = values.apply(key)
+  def value(key: String): Int = cardCatalogue.apply(key)
 
-  private val values: Map[String, Int] = Map(
+  private val cardCatalogue: Map[String, Int] = Map(
     ("2", 0), ("3", 1), ("4", 2),
     ("5", 3), ("6", 4), ("7", 5),
     ("8", 6), ("9", 7), ("T", 8),
     ("J", 9), ("Q", 10), ("K", 11),
     ("A", 12)
   )
+
+  val minValue: Int = 0
+  val maxValue: Int = cardCatalogue.values.foldLeft(0)((acc, v) => v.max(acc))
 }

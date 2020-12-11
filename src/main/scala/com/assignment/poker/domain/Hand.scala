@@ -1,7 +1,29 @@
 package com.assignment.poker.domain
 
 final case class Hand(cards: List[Card]) {
+
+  def sortedCards: List[Card] = this.cards.sortWith(_.value > _.value)
+
+  def isSameSuit: Boolean = {
+    cards.groupBy(_.suit).toList.length == 1
+  }
+
+  def isConsecutive: Boolean = {
+    val sorted = sortedCards
+    (sorted zip sorted.tail) forall { case (c1, c2) => c1.value - 1 == c2.value}
+  }
+
+  def pairs: Map[String, List[Card]] = group(2)
+  def triple: Map[String, List[Card]] = group(3)
+  def quads: Map[String, List[Card]] = group(4)
+
   override def toString: String = cards.mkString("")
+
+  private def group(n: Int): Map[String, List[Card]] = {
+    this.cards
+      .groupBy(_.face)
+      .filter { case (_, lst) => lst.length == n }
+  }
 }
 
 object Hand {

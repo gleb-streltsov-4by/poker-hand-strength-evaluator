@@ -1,9 +1,9 @@
 package com.assignment.poker.core.impl
 
 import com.assignment.poker.core.TypedPokerEvaluator
-import com.assignment.poker.domain.{GameDetails, EvaluationDetail}
+import com.assignment.poker.domain.Hand
 
 class FiveCardDrawEvaluator extends TypedPokerEvaluator {
 
-  override def evaluate(gameDetails: GameDetails): List[EvaluationDetail] = ???
+  override def combinations(originHand: Hand, board: Hand): List[Hand] = ???
 }
