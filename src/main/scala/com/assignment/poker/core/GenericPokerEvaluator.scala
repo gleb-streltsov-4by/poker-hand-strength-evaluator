@@ -61,7 +61,7 @@ trait GenericPokerEvaluator extends AbstractPokerEvaluator[GameDetails, List[Eva
       if foundTriple.nonEmpty && foundPair.nonEmpty
 
       // I would uncomment the logic below in order to make `Full House` to work correctly.
-      // Check the following code details
+      // Check the following code and `README.md` for the details
 
 //      foundTripleValues = foundTriple.head.map(_.value)
 //      foundPairValues = foundPair.head.map(_.value)
