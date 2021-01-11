@@ -47,10 +47,6 @@ trait GenericPokerEvaluator extends AbstractPokerEvaluator[GameDetails, List[Eva
       EvaluationDetail(HandType.FourOfKind, Hand(result.head), origin).some)
   }
 
-  /**
-   * Currently this function works based on requirements example, but
-   * I think there is an error in required regarding this evaluation
-   */
   def tryFullHouse(origin: Hand, combos: List[Hand]): EvaluationResult = {
     val result = for {
       combo <- combos
@@ -59,16 +55,6 @@ trait GenericPokerEvaluator extends AbstractPokerEvaluator[GameDetails, List[Eva
       foundPair = combo.pairs.collect { case (_ , cards) => cards }.toList
 
       if foundTriple.nonEmpty && foundPair.nonEmpty
-
-      // I would uncomment the logic below in order to make `Full House` to work correctly.
-      // Check the following code and `README.md` for the details
-
-//      foundTripleValues = foundTriple.head.map(_.value)
-//      foundPairValues = foundPair.head.map(_.value)
-//      originValues = origin.cards.map(_.value)
-//
-//      if foundPairValues.intersect(originValues).length == 1 &&
-//        foundTripleValues.intersect(originValues).length == 1
 
       trip = foundTriple.head
       pair = foundPair.head
@@ -130,10 +116,6 @@ trait GenericPokerEvaluator extends AbstractPokerEvaluator[GameDetails, List[Eva
 
       pairsValues = foundPairs.flatten.map(_.value)
       originValues = origin.cards.map(_.value)
-
-      intersection = pairsValues.intersect(originValues)
-
-      if intersection.length == 2 && intersection.distinct.length == 2
 
       pairs = Hand(foundPairs.flatten).sortedCards
     } yield pairs ++ combo.cards.filterNot(c => pairs.contains(c))

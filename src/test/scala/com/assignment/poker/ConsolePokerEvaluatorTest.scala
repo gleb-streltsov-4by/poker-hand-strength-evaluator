@@ -36,6 +36,14 @@ class ConsolePokerEvaluatorTest extends AnyFlatSpec {
     assert(actualEvaluation == expectedEvaluation)
   }
 
+  "ConsolePokerEvaluator" should "correctly evaluate input #5" in {
+    val input = "five-card-draw 8h6sAcAhJh Qh6hQdKsKh"
+    val expectedEvaluation = "8h6sAcAhJh Qh6hQdKsKh"
+    val actualEvaluation = ConsolePokerEvaluatorRunner.process(input)
+
+    assert(actualEvaluation == expectedEvaluation)
+  }
+
   "ConsolePokerEvaluator" should "throw a card error" in {
     val input = "five-card-draw Tc5h6dAc12c"
     val expectedEvaluation = "Error: requirement failed: Invalid card ..."
