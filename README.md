@@ -27,3 +27,4 @@
 3) The function `combinations` implemented for `OmahaHoldem` can produce 
    incorrect combinations (doesn't meet the rule `Playing cards are 
    2 from a hand and 3 from a board)
+4) I think error handling could be implemented in a more functional way
