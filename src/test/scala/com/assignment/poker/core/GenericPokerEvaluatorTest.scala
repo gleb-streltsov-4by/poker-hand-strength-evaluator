@@ -69,21 +69,6 @@ class GenericPokerEvaluatorTest extends AnyFlatSpec {
     assert(actualEvaluation == expectedEvaluation)
   }
 
-  // Need to clarify requirements
-
-//  "TypedPokerEvaluator" should "not evaluate FullHouse with board cards" in {
-//    val origin = Hand(List(Card("Ah"), Card("Ac")))
-//
-//    val combos = List(
-//      Hand(List(Card("Ah"), Card("Ac"), Card("Ad"), Card("Th"), Card("Tc")))
-//    )
-//
-//    val expectedEvaluation = EvaluationResult(success = false, None)
-//    val actualEvaluation = sut.tryFullHouse(origin, combos)
-//
-//    assert(actualEvaluation == expectedEvaluation)
-//  }
-
   "TypedPokerEvaluator" should "correctly evaluate Flush " in {
     val origin = Hand(List(Card("Ah"), Card("Th")))
 
@@ -173,19 +158,6 @@ class GenericPokerEvaluatorTest extends AnyFlatSpec {
       Hand(List(Card("4h"), Card("4d"), Card("2c"), Card("2h"), Card("Ah"))),
       origin).some)
 
-    val actualEvaluation = sut.tryTwoPairs(origin, combos)
-
-    assert(actualEvaluation == expectedEvaluation)
-  }
-
-  "TypedPokerEvaluator" should "not evaluate `TwoPairs` with board cards" in {
-    val origin = Hand(List(Card("2c"), Card("4h")))
-
-    val combos = List(
-      Hand(List(Card("4h"), Card("4c"), Card("Th"), Card("2c"), Card("Tc")))
-    )
-
-    val expectedEvaluation = EvaluationResult(success = false, None)
     val actualEvaluation = sut.tryTwoPairs(origin, combos)
 
     assert(actualEvaluation == expectedEvaluation)

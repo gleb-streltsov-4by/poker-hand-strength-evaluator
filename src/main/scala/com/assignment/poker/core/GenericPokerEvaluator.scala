@@ -114,9 +114,6 @@ trait GenericPokerEvaluator extends AbstractPokerEvaluator[GameDetails, List[Eva
 
       if foundPairs.nonEmpty && foundPairs.length == 2
 
-      pairsValues = foundPairs.flatten.map(_.value)
-      originValues = origin.cards.map(_.value)
-
       pairs = Hand(foundPairs.flatten).sortedCards
     } yield pairs ++ combo.cards.filterNot(c => pairs.contains(c))
 
